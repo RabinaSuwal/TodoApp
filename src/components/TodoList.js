@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react';
+import { MdCheckCircle, MdDelete, MdEdit } from "react-icons/md";
 
 function TodoList() {
+    const [isComplete, setIsComplete] = useState('todo');
   return (
+    
     <div className='todo-wrapper'>
         <div className='todo-input'>
 
@@ -20,17 +23,46 @@ function TodoList() {
             </div>
         </div>
 
-            <div class="btn-group" role="group" aria-label="Basic outlined example">
-            <button type="button" class="btn btn-outline-primary">Todo</button>
-            <button type="button" class="btn btn-outline-primary">In-Progress</button>
-            <button type="button" class="btn btn-outline-primary">Completed</button>
+            <div className='btn-area'>
+                <button 
+                    type="button" 
+                    className={`todo-btn ${isComplete==='todo' && 'active'}`} 
+                    onClick={()=>setIsComplete('todo')}
+                >
+                    Todo
+                </button>
+
+                <button 
+                    type="button" 
+                    className={`todo-btn ${isComplete==='in-progress' && 'active'}`} 
+                    onClick={()=>setIsComplete('in-progress')}
+                >
+                    In-progress
+                </button>
+
+                <button 
+                    type="button" 
+                    className={`todo-btn ${isComplete==='complete' && 'active'}`} 
+                    onClick={()=>setIsComplete('complete')}
+                >
+                    Completed
+                </button>
+            
             </div>
 
             <div className='todo-list'>
                 <div className='todo-list-item'>
-                    <h3>Task 1</h3>
-                    <h3>Description</h3>
-                </div>    
+                    <div>
+                        <h3>Task 1</h3>
+                        <p>Description</p>
+                    </div>
+
+                    <div>
+                        <MdDelete className='icon'/>
+                        <MdEdit className='edit-icon'/>
+                        <MdCheckCircle className='check-icon'/>
+                    </div> 
+                </div>   
             </div>
         
     </div>
