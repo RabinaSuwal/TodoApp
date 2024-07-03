@@ -3,6 +3,23 @@ import { MdCheckCircle, MdDelete, MdEdit } from "react-icons/md";
 
 function TodoList() {
     const [isComplete, setIsComplete] = useState('todo');
+    const[allTodos, setAllTodos] = useState([]);
+    const[newTitle, setNewTitle] = useState("");
+    const[newDescription, setNewDescription] = useState("");
+
+    const handleClick = () =>{
+        let newTodoItems = {
+            title:newTitle,
+            description:newDescription
+        }
+
+        let updatedTodoArr = [...allTodos];
+        updatedTodoArr.push(newTodoItems);
+        setAllTodos(updatedTodoArr);
+        setNewTitle("");
+        setNewDescription("");
+    }
+
   return (
     
     <div className='todo-wrapper'>
@@ -10,16 +27,32 @@ function TodoList() {
 
             <div className='todo-input-item'>
                 <label >Title:</label>
-                <input type="text" placeholder="Enter title here"  />
+                <input
+                    type="text" 
+                    placeholder="Enter title here" 
+                    value={newTitle} 
+                    onChange={(e)=>setNewTitle(e.target.value)} 
+                />
             </div>
 
             <div className='todo-input-item'>
                 <label >Description:</label>
-                <input type="text" placeholder="Enter description here"  />
+                <input 
+                    type="text" 
+                    placeholder="Enter description here" 
+                    value={newDescription} 
+                    onChange={(e)=>setNewDescription(e.target.value)} 
+                       
+                />
             </div>
 
             <div className='todo-input-item'>
-                <button type='submit' className='primarybtn'>Add</button>
+                <button  className='primarybtn'
+                    type='submit'
+                    onClick={handleClick}
+                >
+                    Add
+                </button>
             </div>
         </div>
 
@@ -51,10 +84,12 @@ function TodoList() {
             </div>
 
             <div className='todo-list'>
-                <div className='todo-list-item'>
+            {allTodos.map((item, index)=>{
+                return(
+                    <div className='todo-list-item' key={index}>
                     <div>
-                        <h3>Task 1</h3>
-                        <p>Description</p>
+                        <h3>{item.title}</h3>
+                        <p>{item.description}</p>
                     </div>
 
                     <div>
@@ -62,7 +97,11 @@ function TodoList() {
                         <MdEdit className='edit-icon'/>
                         <MdCheckCircle className='check-icon'/>
                     </div> 
-                </div>   
+                </div>  
+                )
+
+            })}
+                 
             </div>
         
     </div>
